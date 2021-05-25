@@ -23,3 +23,28 @@ func SetupDB() {
 	}
 	db = database
 }
+
+func SaveTransactionDB(query string,value map[string]interface{}) (bool, string) {
+	tx := GetDB().Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	if err := tx.Error; err != nil {
+		return true, err.Error()
+	}
+
+	if err := tx.Exec(query,value).Error; err != nil {
+		return true, err.Error()
+	}
+
+	cmt := tx.Commit().Error
+	if cmt != nil {
+		return true, cmt.Error()
+	}else{
+		return false,constants.MessageSuccess
+	}
+
+}

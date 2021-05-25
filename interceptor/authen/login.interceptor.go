@@ -48,9 +48,9 @@ func checkValues(userModel authenUserLoginStc) (bool,string){
 		return true, constants.MessageUsernameNotFount;
 	} else if len(password) == 0 {
 		 return true,constants.MessagePasswordNotFount;
-	} else if format_utls.IsNotStringAlphabet(username){
+	} else if format_utls.IsNotStringEngOtNumber(username){
 		return true,constants.MessageUsernameIsSpecialProhibit;
-	}else if format_utls.IsNotStringAlphabet(password){
+	}else if format_utls.IsNotStringEngOtNumber(password){
 		return true,constants.MessagePasswordIsSpecialProhibit;
 	}
 	return false,"";

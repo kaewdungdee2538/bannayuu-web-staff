@@ -25,7 +25,7 @@ func SetupOSPath(){
 }
 func WriteLog(log *os.File,text string){
 	dt := time.Now()
-	log.WriteString(fmt.Sprintf("<------------------------------------------------------->\nTime : %s\n%s\n",
+	log.WriteString(fmt.Sprintf("<------------------------------------------------------->\n[Time : %s]\n%s\n",
 	dt.Format(time.UnixDate),text))
 }
 func GetErrorLogFile() *os.File{
