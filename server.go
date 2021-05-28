@@ -2,8 +2,8 @@ package main
 
 import (
 	"bannayuu-web-admin/api"
-	logger "bannayuu-web-admin/interceptor/logger"
 	constants "bannayuu-web-admin/constants"
+	logger "bannayuu-web-admin/interceptor/logger"
 	"github.com/gin-gonic/gin"
 	// "github.com/gin-contrib/cors"
 )
@@ -12,7 +12,8 @@ import (
 
 func main() {
 	router := gin.Default()
-	router.Static("images", "./uploads/images")
+	//---setup static pah
+	router.Static("images", constants.RootImages)
 	//---setup CORS
 	router.Use(CORSMiddleware());
 	//---setup logfile

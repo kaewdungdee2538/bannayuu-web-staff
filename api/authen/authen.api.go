@@ -2,6 +2,7 @@ package api
 
 import (
 	constants "bannayuu-web-admin/constants"
+	"bannayuu-web-admin/utils"
 	db "bannayuu-web-admin/db"
 	interceptor "bannayuu-web-admin/interceptor/jwt"
 	login_interceptor "bannayuu-web-admin/interceptor/authen"
@@ -53,11 +54,11 @@ func login(c *gin.Context) {
 			json_user, err := json.Marshal(user)
 			if err != nil {
 				fmt.Println(err)
-				constants.WriteLog(constants.GetErrorLogLoginFile(),fmt.Sprintf("Login Error : %v\n", err));
+				utils.WriteLog(utils.GetErrorLogLoginFile(),fmt.Sprintf("Login Error : %v\n", err));
 				return
 			}
 			//--------create log
-			constants.WriteLog(constants.GetAccessLogLoginFile(),fmt.Sprintf("Username or Password Not Valid !\nRequest : %v\n", string(json_user)))
+			utils.WriteLog(utils.GetAccessLogLoginFile(),fmt.Sprintf("Username or Password Not Valid !\nRequest : %v\n", string(json_user)))
 			//--------response
 			c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageUsernameOrPasswordNotValid})
 			return
@@ -69,7 +70,7 @@ func login(c *gin.Context) {
 		err := json.Unmarshal([]byte(j), &privilege_info)
 		if err != nil {
 			//--------create error log
-			constants.WriteLog(constants.GetErrorLogLoginFile(),fmt.Sprintf("Error parsing JSON string - %s", err))
+			utils.WriteLog(utils.GetErrorLogLoginFile(),fmt.Sprintf("Error parsing JSON string - %s", err))
 			fmt.Printf("Error parsing JSON string - %s", err)
 		}
 		//--------------Create JWT Token
@@ -92,18 +93,18 @@ func login(c *gin.Context) {
 		json_user, err := json.Marshal(user)
 		if err != nil {
 			fmt.Println(err)
-			constants.WriteLog(constants.GetErrorLogLoginFile(),fmt.Sprintf("Login Error : %v\n", err))
+			utils.WriteLog(utils.GetErrorLogLoginFile(),fmt.Sprintf("Login Error : %v\n", err))
 			return
 		}
 		//--------create log
-		constants.WriteLog(constants.GetAccessLogLoginFile(),fmt.Sprintf("Login Success.\nRequest : %v\n", string(json_user)))
+		utils.WriteLog(utils.GetAccessLogLoginFile(),fmt.Sprintf("Login Success.\nRequest : %v\n", string(json_user)))
 		//--------response
 		c.JSON(http.StatusOK, gin.H{"error": false,
 			"result":  newUserResponse,
 			"message": "success"})
 	} else {
 		//--------create log
-		constants.WriteLog(constants.GetAccessLogLoginFile(),"map struct error !\n")
+		utils.WriteLog(utils.GetAccessLogLoginFile(),"map struct error !\n")
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": "map struct error"})
 	}
 }

@@ -26,7 +26,7 @@ func LoginValidateValues(c *gin.Context) {
 	err := json.Unmarshal([]byte(jsonString), &userModel)
 	if err != nil {
 		//--------create error log
-		constants.WriteLog(constants.GetErrorLogFile(),fmt.Sprintf("Error parsing JSON string - %s", err))
+		format_utls.WriteLog(format_utls.GetErrorLogFile(),fmt.Sprintf("Error parsing JSON string - %s", err))
 		fmt.Printf("Error parsing JSON string - %s", err)
 	}
 	isErr,msg := checkValues(userModel);
@@ -48,9 +48,9 @@ func checkValues(userModel authenUserLoginStc) (bool,string){
 		return true, constants.MessageUsernameNotFount;
 	} else if len(password) == 0 {
 		 return true,constants.MessagePasswordNotFount;
-	} else if format_utls.IsNotStringEngOtNumber(username){
+	} else if format_utls.IsNotStringEngOrNumber(username){
 		return true,constants.MessageUsernameIsSpecialProhibit;
-	}else if format_utls.IsNotStringEngOtNumber(password){
+	}else if format_utls.IsNotStringEngOrNumber(password){
 		return true,constants.MessagePasswordIsSpecialProhibit;
 	}
 	return false,"";

@@ -13,6 +13,7 @@ import (
 )
 
 func Setup(router *gin.Engine) {
+	router.MaxMultipartMemory = 8<<20 // 8mb
 	db.SetupDB()
 	authen.SetupAuthenAPI(router);
 	company.SetupCompanyAPI(router);

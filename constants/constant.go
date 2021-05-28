@@ -1,10 +1,11 @@
 package constants
 
 //-----------------Database
-const DbHost = "cit.bannayuu.com"
+const DbHost = "uat.bannayuu.com"
 const DbName = "uat_cit_bannayuu_db"
 const DbPort = "5432"
 const AppPort = ":4501"
+const RootImages = "F:\\API\\myvilla\\web-admin\\back\\uploads\\images"
 
 //-----------------Authen
 const jwtAccessToken = "f56c3775-07b0-45e7-800f-304274533cb7"

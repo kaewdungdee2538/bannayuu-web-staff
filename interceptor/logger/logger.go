@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"time"
 	"github.com/gin-gonic/gin"
-	constants "bannayuu-web-admin/constants"
+	"bannayuu-web-admin/utils"
 )
 
 func CreateOrAppendLogger(router *gin.Engine) {
-	gin.DefaultErrorWriter = constants.GetErrorLogFile();
-	gin.DefaultWriter = constants.GetAccessLogFile();
+	gin.DefaultErrorWriter = utils.GetErrorLogFile();
+	gin.DefaultWriter = utils.GetAccessLogFile();
 	// r.Use(gin.Logger())
 	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
 		//custom format
