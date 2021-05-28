@@ -30,6 +30,7 @@ func AddCompany(c *gin.Context) {
 		errsaveimg := c.SaveUploadedFile(companyModelReq.Image, fileName)
 		if errsaveimg != nil {
 			c.String(http.StatusInternalServerError, constants.MessageImageNotFound)
+			utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageImageNotFound)
 			return
 		}
 		//----------Query
@@ -82,11 +83,13 @@ func saveAddCompanyQuery(
 	err_setup, setup_data := convertStrucToJSONStringSetupForAdd(companyModelReq)
 	if err_setup {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
+		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 	err_all_obj, all_obj := convertStrucToJSONStringAllForAdd(companyModelReq, jwtemployeeid, fmt.Sprintf("%s/%s", rootCurrentDate, imageName))
 	if err_all_obj {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
+		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 	query := `
@@ -158,20 +161,12 @@ func saveAddCompanyQuery(
 		"log_data":            all_obj}
 
 	if err, message := db.SaveTransactionDB(query, values); err {
-		fmt.Printf("add company error : %s", message)
-		err, value_json := utils.ConvertInterfaceToJSON(values)
-		if err {
-			fmt.Printf("convert obj to json error : %s", constants.MessageCovertObjTOJSONFailed)
-		}
+		fmt.Printf("add company Failed")
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": message})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), fmt.Sprintf("Add company failed !\nRequest : %v\n", string(value_json)))
+		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), values, "Add company Failed")
 	} else {
 		fmt.Printf("add company successfully")
-		err, value_json := utils.ConvertInterfaceToJSON(values)
-		if err {
-			fmt.Printf("convert obj to json error : %s", constants.MessageCovertObjTOJSONFailed)
-		}
 		c.JSON(http.StatusOK, gin.H{"error": false, "result": nil, "message": constants.MessageSuccess})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), fmt.Sprintf("Add company successfully.\nRequest : %v\n", string(value_json)))
+		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), values, "Add company successfully.")
 	}
 }

@@ -26,6 +26,7 @@ func EditInfoCompany(c *gin.Context) {
 		errsaveimg := c.SaveUploadedFile(companyModelReq.Image, fileName)
 		if errsaveimg != nil {
 			c.String(http.StatusInternalServerError, constants.MessageImageNotFound)
+			utils.WriteLog(utils.GetAccessLogCompanyFile(),constants.MessageImageNotFound)
 			return
 		}
 		//----------Query
@@ -74,11 +75,13 @@ func saveEditCompanyQuery(
 	err_setup, setup_data := convertStrucToJSONStringForSetupForEdit(companyModelReq)
 	if err_setup {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
+		utils.WriteLog(utils.GetAccessLogCompanyFile(),constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 	err_all_obj, all_obj := convertStrucToJSONStringAllForEdit(companyModelReq, jwtemployeeid, fmt.Sprintf("%s/%s", rootCurrentDate, imageName))
 	if err_all_obj {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
+		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 	query := fmt.Sprintf(`
@@ -113,7 +116,7 @@ func saveEditCompanyQuery(
 				,current_timestamp
 				,@company_id
 			)
-			`,companyModelReq.Company_id);
+			`, companyModelReq.Company_id)
 
 	values := map[string]interface{}{
 		"company_id":          companyModelReq.Company_id,
@@ -128,19 +131,10 @@ func saveEditCompanyQuery(
 
 	if err, message := db.SaveTransactionDB(query, values); err {
 		fmt.Printf("edit company error : %s", message)
-		err, value_json := utils.ConvertInterfaceToJSON(values)
-		if err {
-			fmt.Printf("convert obj to json error : %s", constants.MessageCovertObjTOJSONFailed)
-		}
-		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": message})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), fmt.Sprintf("Edit company failed !\nRequest : %v\n", string(value_json)))
+		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), values, "Edit company failed !")
 	} else {
 		fmt.Printf("Edit company successfully")
-		err, value_json := utils.ConvertInterfaceToJSON(values)
-		if err {
-			fmt.Printf("convert obj to json error : %s", constants.MessageCovertObjTOJSONFailed)
-		}
 		c.JSON(http.StatusOK, gin.H{"error": false, "result": nil, "message": constants.MessageSuccess})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), fmt.Sprintf("Edit company successfully.\nRequest : %v\n", string(value_json)))
+		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), values, "Edit company successfully.")
 	}
 }
