@@ -1,9 +1,10 @@
 package constants
 
 const MessageSuccess = "เรียบร้อย"
-const MessageFailed = "ล้มเหลว"
+const MessageFailed = "ทำรายการล้มเหลว"
 
 const MessageCombineFailed = "Combine Error"
+const MessageDataNotCompletely = "กรอกข้อมูลไม่ครบถ้วน"
 
 const MessageNotAuthorization = "Session หมดอายุ"
 const MessageAuthorizationBearerNotSet = "Bearer Token is null!"
@@ -22,6 +23,7 @@ const MessageCompanyNameIsSpecialProhibit = "ชื่อโครงการ �
 const MessageCompanyProNotFound = "กรุณาเลือก Pro"
 const MessageCompanyProIsSpecialProhibit = "Pro ต้องเป็นอักษรภาษอังกฤษ หรือตัวเลขเท่านั้น"
 const MessageCompanyNotInBase = "ไม่พบโครงการในระบบ"
+const MessageCompanyIsDuplicateInBase = "รหัสโครงการ หรือชื่อโครงการซ้ำในระบบ"
 
 const MessageDateStartNotFound = "กรุณากรอกเวลาเริ่มต้น"
 const MessageDateStarFormatNotValid = "รูปแบบเวลาเริ่มต้นไม่ถูกต้อง"

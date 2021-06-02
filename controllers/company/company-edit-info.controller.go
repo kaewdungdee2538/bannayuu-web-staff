@@ -18,7 +18,7 @@ func EditInfoCompany(c *gin.Context) {
 	if c.ShouldBind(&companyModelReq) == nil {
 		//----------Save image
 		rootCurrentDate := fmt.Sprintf("Company/%s", utils.GetDirectoryDate())
-		imageName := utils.EncodeImageImage("ACM")
+		imageName := utils.EncodeImageImage("COM_EDIT")
 		rootImages := fmt.Sprintf("%s/%s", constants.RootImages, rootCurrentDate)
 		//----------check location path
 		utils.CheckDirectory(rootImages)
@@ -26,7 +26,7 @@ func EditInfoCompany(c *gin.Context) {
 		errsaveimg := c.SaveUploadedFile(companyModelReq.Image, fileName)
 		if errsaveimg != nil {
 			c.String(http.StatusInternalServerError, constants.MessageImageNotFound)
-			utils.WriteLog(utils.GetAccessLogCompanyFile(),constants.MessageImageNotFound)
+			utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageImageNotFound)
 			return
 		}
 		//----------Query
@@ -48,12 +48,14 @@ func convertStrucToJSONStringForSetupForEdit(companyModelReq model_company.Compa
 }
 func convertStrucToJSONStringAllForEdit(companyModelReq model_company.CompanyEditModelRequest, jwtemployeeid interface{}, fileName string) (bool, string) {
 	req_map := map[string]interface{}{
+		"company_id":                 companyModelReq.Company_id,
 		"company_code":               companyModelReq.Company_code,
 		"company_name":               companyModelReq.Company_name,
 		"company_promotion":          companyModelReq.Company_promotion,
 		"company_start_date":         companyModelReq.Company_start_date,
 		"company_expire_date":        companyModelReq.Company_expire_date,
-		"create_by":                  jwtemployeeid,
+		"remark":                     companyModelReq.Remark,
+		"edit_by":                    jwtemployeeid,
 		"calculate_enable":           companyModelReq.Calculate_enable,
 		"except_time_split_from_day": companyModelReq.Except_time_split_from_day,
 		"price_of_cardloss":          companyModelReq.Price_of_cardloss,
@@ -75,7 +77,7 @@ func saveEditCompanyQuery(
 	err_setup, setup_data := convertStrucToJSONStringForSetupForEdit(companyModelReq)
 	if err_setup {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(),constants.MessageCovertObjTOJSONFailed)
+		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 	err_all_obj, all_obj := convertStrucToJSONStringAllForEdit(companyModelReq, jwtemployeeid, fmt.Sprintf("%s/%s", rootCurrentDate, imageName))
@@ -91,6 +93,7 @@ func saveEditCompanyQuery(
 			,company_promotion = @company_promotion
 			,company_start_date = @company_start_date
 			,company_expire_date = @company_expire_date
+			,company_remark = @remark
 			,update_by = @update_by
 			,update_date = current_timestamp
 			where company_id = @company_id
@@ -125,13 +128,15 @@ func saveEditCompanyQuery(
 		"company_promotion":   companyModelReq.Company_promotion,
 		"company_start_date":  companyModelReq.Company_start_date,
 		"company_expire_date": companyModelReq.Company_expire_date,
+		"remark":              companyModelReq.Remark,
 		"update_by":           jwtemployeeid,
 		"setup_data":          setup_data,
 		"log_data":            all_obj}
 
 	if err, message := db.SaveTransactionDB(query, values); err {
 		fmt.Printf("edit company error : %s", message)
-		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), values, "Edit company failed !")
+		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageFailed})
+		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), values, fmt.Sprintf("Edit company failed : %s", message))
 	} else {
 		fmt.Printf("Edit company successfully")
 		c.JSON(http.StatusOK, gin.H{"error": false, "result": nil, "message": constants.MessageSuccess})

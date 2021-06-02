@@ -2,8 +2,10 @@ package interceptor
 
 import (
 	constants "bannayuu-web-admin/constants"
+	db "bannayuu-web-admin/db"
 	model_company "bannayuu-web-admin/model/company"
 	format_utls "bannayuu-web-admin/utils"
+	"database/sql"
 	// "bytes"
 	// "encoding/json"
 	"fmt"
@@ -17,6 +19,7 @@ import (
 func AddCompanyValidateValuesInterceptor(c *gin.Context) {
 	var companyModel model_company.CompanyAddModelRequest
 	if err := c.ShouldBind(&companyModel); err != nil {
+		fmt.Printf("Combine Error : %s", err)
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCombineFailed})
 		c.Abort()
 		return
@@ -79,6 +82,29 @@ func checkValuesAddCompany(companyModel model_company.CompanyAddModelRequest) (b
 		return true, constants.MessageDateStopNotFound
 	} else if format_utls.IsNotFormatTime(Company_expire_date) {
 		return true, constants.MessageDateStopFormatNotValid
+	}
+	return checkCompanyDuplicate(Company_code, Company_name)
+}
+
+func checkCompanyDuplicate(comCode string, comName string) (bool, string) {
+	var companyIdObj CompanyGetIdModelResponse
+	company_code := comCode
+	company_name := comName
+	query := `select company_id from m_company
+	where delete_flag = 'N' 
+	and (company_name = @company_name
+	or	company_code = @company_code
+	);
+	`
+	rows, _ := db.GetDB().Raw(query, sql.Named("company_name", company_name), sql.Named("company_code", company_code)).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&companyIdObj)
+		db.GetDB().ScanRows(rows, &companyIdObj)
+		// do something
+	}
+	if companyIdObj.Company_id > 0 {
+		return true, constants.MessageCompanyIsDuplicateInBase
 	}
 	return false, ""
 }

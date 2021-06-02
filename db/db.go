@@ -31,7 +31,6 @@ func SaveTransactionDB(query string,value map[string]interface{}) (bool, string)
 			tx.Rollback()
 		}
 	}()
-
 	if err := tx.Error; err != nil {
 		return true, err.Error()
 	}
@@ -46,5 +45,4 @@ func SaveTransactionDB(query string,value map[string]interface{}) (bool, string)
 	}else{
 		return false,constants.MessageSuccess
 	}
-
 }
