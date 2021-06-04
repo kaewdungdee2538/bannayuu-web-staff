@@ -55,15 +55,19 @@ func convertStrucToJSONStringSetupCalForAdd(companyModelReq model_company.Compan
 	return false, setup_data
 }
 
-func convertStrucToJSONStringSetupVisitorInForAdd(companyModelReq model_company.CompanyAddModelRequest) (bool, string) { 
+func convertStrucToJSONStringSetupVisitorInForAdd(companyModelReq model_company.CompanyAddModelRequest) (bool, string) {
 	//---------Convert obj to json string
-	var Booking_verify string;
-	if len(companyModelReq.Booking_verify) == 0{
-		Booking_verify = "qr";
+	var Booking_verify string
+	if len(companyModelReq.Booking_verify) == 0 {
+		Booking_verify = "qr"
+	} else {
+		Booking_verify = companyModelReq.Booking_verify
 	}
-	var Visitor_verify string;
-	if len(companyModelReq.Visitor_verify) == 0{
-		Visitor_verify = "identitycard";
+	var Visitor_verify string
+	if len(companyModelReq.Visitor_verify) == 0 {
+		Visitor_verify = "identitycard"
+	} else {
+		Visitor_verify = companyModelReq.Visitor_verify
 	}
 	setup_data_map := map[string]interface{}{
 		"booking_verify": Booking_verify,
@@ -212,7 +216,7 @@ func saveAddCompanyQuery(
 				fun_generate_uuid('MST002'||trim(to_char((select comid FROM comtb),'000')),0)
 				,'Sub Visitor Out Security'
 				,'ความปลอดภัยของ Visitor ขาออก'
-				,2
+				,3
 				,@setup_data_visitor_out
 				,'booking จะต้อง estamp ก่อนถึงออกได้ และ visitor จะต้อง estamp ก่อนถึงจะออกได้'
 				,(select comid FROM comtb)

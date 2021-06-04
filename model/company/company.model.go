@@ -72,4 +72,6 @@ type CompanyGetByIdResponse struct {
 	Calculate_enable           bool   `json:"calculate_enable"`
 	Price_of_cardloss          int    `json:"price_of_cardloss"`
 	Except_time_split_from_day bool   `json:"except_time_split_from_day"`
+	Booking_estamp_verify      bool   `json:"booking_estamp_verify"`
+	Visitor_estamp_verify      bool   `json:"visitor_estamp_verify"`
 }

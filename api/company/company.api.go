@@ -26,6 +26,11 @@ func SetupCompanyAPI(router *gin.Engine) {
 			interceptor_com.GetIdCompanyValidateValuesInterceptor,
 			interceptor_remark.CheckRemarkValidateValueFormDataInterceptor,
 			controller_com.DisableCompany)
+		authenApi.POST("/enable",
+			interceptor.JwtVerify,
+			interceptor_com.GetIdCompanyValidateValuesInterceptor,
+			interceptor_remark.CheckRemarkValidateValueFormDataInterceptor,
+			controller_com.EnableCompany)
 		authenApi.POST("/get-all", interceptor.JwtVerify, controller_com.GetCompanyAll)
 		authenApi.POST("/get-by-id", interceptor.JwtVerify, controller_com.GetCompanyById)
 

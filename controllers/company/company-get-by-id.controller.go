@@ -34,14 +34,19 @@ func GetCompanyById(c *gin.Context) {
 	,to_char(mc.update_date,'YYYY-MM-DD HH24:MI:SS') as update_date
 	,(select concat(first_name_th,' ',last_name_th) from m_employee where employee_id = mc.delete_by) as delete_by
 	,to_char(mc.delete_date,'YYYY-MM-DD HH24:MI:SS') as delete_date
-	,setup_data->>'calculate_enable' as calculate_enable
-	,setup_data->>'price_of_cardloss' as price_of_cardloss
-	,setup_data->>'except_time_split_from_day' as except_time_split_from_day
+	,ms.setup_data->>'calculate_enable' as calculate_enable
+	,ms.setup_data->>'price_of_cardloss' as price_of_cardloss
+	,ms.setup_data->>'except_time_split_from_day' as except_time_split_from_day
+	,ms2.setup_data->>'booking_estamp_verify' as booking_estamp_verify
+	,ms2.setup_data->>'visitor_estamp_verify' as visitor_estamp_verify
 	from m_company mc
 	left join m_setup ms
 	on mc.company_id = ms.company_id
+	left join m_setup ms2
+	on ms.company_id = ms2.company_id
 	where mc.company_id = @company_id
 	and ms.ref_setup_id = 8
+	and ms2.ref_setup_id = 3
 	 limit 1;`
 	rows, err := db.GetDB().Raw(query, sql.Named("company_id", companyRequestDb.Company_id)).Rows()
 
@@ -60,7 +65,7 @@ func GetCompanyById(c *gin.Context) {
 		if companyResponseDb.Company_id == 0 {
 			c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCompanyNotInBase})
 			utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), nil, "Get by id company Not In Base.")
-			return;
+			return
 		}
 		fmt.Printf("Get by id company successfully")
 		c.JSON(http.StatusOK, gin.H{"error": false, "result": companyResponseDb, "message": constants.MessageSuccess})

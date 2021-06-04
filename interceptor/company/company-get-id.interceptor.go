@@ -47,7 +47,7 @@ func checkValuesGetCompanyId(comId string) (bool, string) {
 	var companyIdObj CompanyGetIdModelResponse
 	company_id := comId
 	query := `select company_id from m_company
-	where delete_flag = 'N' and company_id = @company_id
+	where company_id = @company_id;
 	`
 	rows, _ := db.GetDB().Raw(query, sql.Named("company_id", company_id)).Rows()
 	defer rows.Close()
