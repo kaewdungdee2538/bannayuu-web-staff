@@ -36,3 +36,15 @@ const MessageRemarkIsLower10Character = "กรุณากรอกเหตุ
 const MessageRemarkProhibitSpecial = "เหตุผล ห้ามมีอักขระพิเศษ"
 
 const MessageImageNotFound = "ไม่พบรูปภาพ"
+
+const MessageHomeAddressNotFound = "กรุณากรอกบ้านเลขที่"
+const MessageHomeAddressProhibitSpecial = "บ้านเลขที่ ห้ามมีอักขระพิเศษ"
+
+const MessageFirstNameNotFound = "กรุณากรอกชื่อ"
+const MessageFirstNameProhitbitSpecial = "ชื่อ ห้ามมีอักขระพิเศษ"
+const MessageLastNameNotFound = "กรุณากรอกนามสกุล"
+const MessageLastNameProhitbitSpecial = "นามสกุล ห้ามมีมีอักขระพิเศษ"
+const MessageTelNumberNotFound = "กรุณากรอกเบอร์โทรศัพท์"
+const MessageTelNumberIsLess10Digit = "เบอร์โทรศัพท์ต้องไม่น้อยกว่า 10 ตัวอักษร"
+const MessageTelNumberIsMoreThan10Digit = "เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวอักษร"
+const MessageTelNumberNotNumber = "เบอรโทรศัพท์ต้องเป็นตัวเลขเท่านั้น"

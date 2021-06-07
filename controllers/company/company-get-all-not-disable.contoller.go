@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func GetCompanyAll(c *gin.Context) {
+func GetCompanyAllNotDisable(c *gin.Context) {
 	var companyRequest model_company.CompanyGetAllRequest
 	var companyResponseDb []model_company.CompanyGetAllResponse
 	if err := c.ShouldBind(&companyRequest); err != nil {
@@ -25,7 +25,7 @@ func GetCompanyAll(c *gin.Context) {
 	when current_timestamp < company_start_date then 'NOTOPEN'
 	when current_timestamp > company_expire_date then 'EXPIRE'
 	else 'NORMAL' end as status
-	from m_company where company_id IS NOT NULL`
+	from m_company where delete_flag = 'N' and current_timestamp < company_expire_date`
 	if companyRequest.Company_code != ""  {
 		query += ` and company_code = @company_code `
 	}else if companyRequest.Company_name != ""{
@@ -42,7 +42,7 @@ func GetCompanyAll(c *gin.Context) {
 	fmt.Println(companyRequest.Company_code)
 	fmt.Println(companyRequest.Company_name)
 	if err != nil {
-		fmt.Printf("Get company error : %s", err)
+		fmt.Printf("Get company not disable error : %s", err)
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageFailed})
 		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), nil, fmt.Sprintf("Get company failed : %s", err))
 		defer rows.Close()
@@ -54,7 +54,7 @@ func GetCompanyAll(c *gin.Context) {
 			// do something
 		}
 
-		fmt.Printf("Get company successfully")
+		fmt.Printf("Get company not disable successfully")
 		c.JSON(http.StatusOK, gin.H{"error": false, "result": companyResponseDb, "message": constants.MessageSuccess})
 		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), nil, "Get company successfully.")
 	}

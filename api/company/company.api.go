@@ -12,9 +12,9 @@ import (
 )
 
 func SetupCompanyAPI(router *gin.Engine) {
-	authApiHTTP := constants.GetCompanyInsertHTTPClient()
-	fmt.Printf("comapny api http : %s", authApiHTTP)
-	authenApi := router.Group(authApiHTTP)
+	companyApiHTTP := constants.GetCompanyInsertHTTPClient()
+	fmt.Printf("comapny api http : %s", companyApiHTTP)
+	authenApi := router.Group(companyApiHTTP)
 	{
 		authenApi.POST("/add", interceptor.JwtVerify, interceptor_com.AddCompanyValidateValuesInterceptor, controller_com.AddCompany)
 		authenApi.POST("/edit-info",
@@ -32,6 +32,7 @@ func SetupCompanyAPI(router *gin.Engine) {
 			interceptor_remark.CheckRemarkValidateValueFormDataInterceptor,
 			controller_com.EnableCompany)
 		authenApi.POST("/get-all", interceptor.JwtVerify, controller_com.GetCompanyAll)
+		authenApi.POST("/get-all-not-disable", interceptor.JwtVerify, controller_com.GetCompanyAllNotDisable)
 		authenApi.POST("/get-by-id", interceptor.JwtVerify, controller_com.GetCompanyById)
 
 	}

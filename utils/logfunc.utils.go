@@ -69,3 +69,39 @@ func GetAccessLogCompanyFile() *os.File {
 	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
 	return accessLogCompanyFile
 }
+
+func GetErrorLogHomeFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s\\%s", constants.RootHome, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s\\api_home_error.log", directory)
+	errLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return errLogCompanyFile
+}
+
+func GetAccessLogHomeFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s\\%s", constants.RootHome, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s\\api_home_access.log", directory)
+	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return accessLogCompanyFile
+}
+
+func GetErrorLogVillagerFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s\\%s", constants.RootVillager, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s\\api_villager_error.log", directory)
+	errLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return errLogCompanyFile
+}
+
+func GetAccessLogVillagerFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s\\%s", constants.RootVillager, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s\\api_villager_access.log", directory)
+	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return accessLogCompanyFile
+}

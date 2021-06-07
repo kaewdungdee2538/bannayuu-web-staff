@@ -247,7 +247,7 @@ func saveAddCompanyQuery(
 		"company_promotion":      companyModelReq.Company_promotion,
 		"company_start_date":     companyModelReq.Company_start_date,
 		"company_expire_date":    companyModelReq.Company_expire_date,
-		"create_by":              jwtemployeeid,
+		"create_by":              fmt.Sprint(jwtemployeeid),
 		"setup_data_calculate":   setup_data_calculate,
 		"setup_data_visitor_in":  setup_data_visitor_in,
 		"setup_data_visitor_out": setup_data_visitor_out,

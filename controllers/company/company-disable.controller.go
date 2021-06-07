@@ -79,7 +79,7 @@ func saveDisableCompanyQuery(
 	values := map[string]interface{}{
 		"company_id": companyModelReq.Company_id,
 		"remark":     companyModelReq.Remark,
-		"delete_by":  jwtemployeeid,
+		"delete_by":  fmt.Sprint(jwtemployeeid),
 		"log_data":   all_obj}
 
 	if err, message := db.SaveTransactionDB(query, values); err {

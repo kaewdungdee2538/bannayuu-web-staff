@@ -42,6 +42,10 @@ type CompanyDisableModelRequest struct {
 	Remark     string                `form:"remark"`
 }
 
+type CompanyGetAllRequest struct {
+	Company_code string
+	Company_name string
+}
 type CompanyGetAllResponse struct {
 	Company_id        int    `json:"company_id"`
 	Company_code      string `json:"company_code"`
@@ -74,4 +78,9 @@ type CompanyGetByIdResponse struct {
 	Except_time_split_from_day bool   `json:"except_time_split_from_day"`
 	Booking_estamp_verify      bool   `json:"booking_estamp_verify"`
 	Visitor_estamp_verify      bool   `json:"visitor_estamp_verify"`
+}
+
+
+type CompanyGetIdNotDisableResponseModel struct {
+	Company_id int `json:"company_id"`
 }

@@ -11,7 +11,7 @@ import (
 )
 
 type CompanyGetIdModelRequest struct {
-	Company_id string `form:"company_id" binding:"required"`
+	Company_id string `form:"company_id"`
 }
 type CompanyGetIdModelResponse struct {
 	Company_id int `json:"company_id"`
