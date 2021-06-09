@@ -26,21 +26,17 @@ func GetCompanyAllNotDisable(c *gin.Context) {
 	when current_timestamp > company_expire_date then 'EXPIRE'
 	else 'NORMAL' end as status
 	from m_company where delete_flag = 'N' and current_timestamp < company_expire_date`
-	if companyRequest.Company_code != ""  {
-		query += ` and company_code = @company_code `
-	}else if companyRequest.Company_name != ""{
-		query += ` and company_name LIKE @company_name `
+	if companyRequest.Company_code_or_name != ""  {
+		query += ` and (company_code = @company_code or company_name LIKE @company_name)`
 	}
 	query += ` order by company_code;`
 	likeStr := "%"
-	company_name := fmt.Sprintf("%s%s%s", likeStr, companyRequest.Company_name, likeStr)
+	Company_name := fmt.Sprintf("%s%s%s", likeStr, companyRequest.Company_code_or_name, likeStr)
 	rows, err := db.GetDB().Raw(query,
-		sql.Named("company_code", companyRequest.Company_code),
-		sql.Named("company_name", company_name)).Rows()
+		sql.Named("company_code", companyRequest.Company_code_or_name),
+		sql.Named("company_name", Company_name),
+		).Rows()
 
-	fmt.Println(query)
-	fmt.Println(companyRequest.Company_code)
-	fmt.Println(companyRequest.Company_name)
 	if err != nil {
 		fmt.Printf("Get company not disable error : %s", err)
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageFailed})
@@ -53,9 +49,8 @@ func GetCompanyAllNotDisable(c *gin.Context) {
 			db.GetDB().ScanRows(rows, &companyResponseDb)
 			// do something
 		}
-
 		fmt.Printf("Get company not disable successfully")
-		c.JSON(http.StatusOK, gin.H{"error": false, "result": companyResponseDb, "message": constants.MessageSuccess})
+		c.JSON(http.StatusOK, gin.H{"error": false, "result":companyResponseDb, "message": constants.MessageSuccess})
 		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), nil, "Get company successfully.")
 	}
 }

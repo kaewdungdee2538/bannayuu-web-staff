@@ -119,10 +119,10 @@ func insertHomeQuery(
 				,create_date
 				,company_id
 			)values(
-				fun_generate_uuid('LH'||trim(to_char(%v,'000'))||trim(to_char((select homeid FROM hometb),'000')),5)
+				fun_generate_uuid('LH'||trim(to_char(%v,'000'))||(select homeid::text FROM hometb),5)
 				,'เพิ่มบ้านหลังใหม่'
 				,@log_data
-				,'CREATE'
+				,'IMPORT'
 				,@create_by
 				,current_timestamp
 				,@company_id

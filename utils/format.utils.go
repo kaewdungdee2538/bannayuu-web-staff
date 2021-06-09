@@ -17,7 +17,7 @@ func IsNotStringAlphabet(str string) bool {
 }
 
 func IsNotStringAlphabetRemark(str string) bool {
-	const alpha = `/!@#$%^&*\[\]{};':",<>\/?~`
+	const alpha = `!@#$%^&*\[\]{};':",<>?~`
 	// const alpha = `abcdefghijklmnopqrstuvwxyz0123456789กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ`
 	for _, char := range str {  
 		if strings.Contains(alpha, strings.ToLower(string(char))) {

@@ -43,8 +43,7 @@ type CompanyDisableModelRequest struct {
 }
 
 type CompanyGetAllRequest struct {
-	Company_code string
-	Company_name string
+	Company_code_or_name string
 }
 type CompanyGetAllResponse struct {
 	Company_id        int    `json:"company_id"`

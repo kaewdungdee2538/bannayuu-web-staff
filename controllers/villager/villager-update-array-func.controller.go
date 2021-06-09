@@ -46,10 +46,10 @@ func updateVillagerQuery(
 				,create_date
 				,company_id
 			)values(
-				fun_generate_uuid('LHL'||trim(to_char(%v,'000'))||trim(to_char((select homelineid FROM villagertb),'000')),5)
+				fun_generate_uuid('LHL'||trim(to_char(%v,'000'))||(select homelineid::text FROM villagertb),5)
 				,'แก้ไขข้อมูลลูกบ้าน'
 				,@log_data
-				,'UPDATE'
+				,'IMPORTUPDATE'
 				,@update_by
 				,current_timestamp
 				,@company_id

@@ -34,7 +34,7 @@ func insertVillagerQuery(
 			,create_date
 			,company_id
 		) values(
-			fun_generate_uuid('HOMELINE'||trim(to_char(%v,'000'))||trim(to_char(%v,'0000')),6)
+			fun_generate_uuid('HOMELINE'||trim(to_char(%v,'000'))||%v,6)
 			,@home_id
 			,@home_line_first_name
 			,@home_line_last_name
@@ -55,10 +55,10 @@ func insertVillagerQuery(
 				,create_date
 				,company_id
 			)values(
-				fun_generate_uuid('LHL'||trim(to_char(%v,'000'))||trim(to_char((select homelineid FROM villagertb),'000')),5)
+				fun_generate_uuid('LHL'||trim(to_char(%v,'000'))||(select homelineid::text FROM villagertb),5)
 				,'เพิ่มลูกบ้านคนใหม่'
 				,@log_data
-				,'CREATE'
+				,'IMPORT'
 				,@create_by
 				,current_timestamp
 				,@company_id
