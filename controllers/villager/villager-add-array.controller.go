@@ -80,7 +80,7 @@ func checkHomeInDataBaseForVillager(company_id string, villager_obj *villager_mo
 			// do something
 		}
 		if HomeIdResponseDb.Home_id == 0 {
-			message := fmt.Sprintf("Get by id at home address %s Not In Base.\n", villager_obj.Home_address)
+			message := fmt.Sprintf("ไม่พบบ้านเลขที่ %s ในระบบ\n", villager_obj.Home_address)
 			utils.WriteLogInterface(utils.GetAccessLogVillagerFile(), nil, message)
 			fmt.Println(message)
 			return false, message

@@ -7,7 +7,6 @@ import (
 
 func IsNotStringAlphabet(str string) bool {
 	const alpha = `/!@#$%^&*()_+\-=\[\]{};':"|,.<>\/?~`
-	// const alpha = `abcdefghijklmnopqrstuvwxyz0123456789กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ`
 	for _, char := range str {  
 		if strings.Contains(alpha, strings.ToLower(string(char))) {
 		   return true
@@ -18,7 +17,16 @@ func IsNotStringAlphabet(str string) bool {
 
 func IsNotStringAlphabetRemark(str string) bool {
 	const alpha = `!@#$%^&*\[\]{};':",<>?~`
-	// const alpha = `abcdefghijklmnopqrstuvwxyz0123456789กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ`
+	for _, char := range str {  
+		if strings.Contains(alpha, strings.ToLower(string(char))) {
+		   return true
+		}
+	 }
+	 return false
+}
+
+func IsNotStringAlphabetForJSONString(str string) bool {
+	const alpha = `!@#$%^&*;<>?~`
 	for _, char := range str {  
 		if strings.Contains(alpha, strings.ToLower(string(char))) {
 		   return true

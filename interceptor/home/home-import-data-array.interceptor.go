@@ -7,7 +7,7 @@ import (
 	company_model "bannayuu-web-admin/model/company"
 	format_utls "bannayuu-web-admin/utils"
 	"bytes"
-	"database/sql"
+	// "database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -65,10 +65,9 @@ func CheckValueCompanyIdNotDisavle(Company_id string) (bool, string) {
 func checkValuesGetCompanyIdNotDisable(comId string) (bool, string) {
 	var companyIdObj company_model.CompanyGetIdNotDisableResponseModel
 	company_id := comId
-	query := `select company_id from m_company
-	where delete_flag = 'N' and company_id = @company_id;
-	`
-	rows, _ := db.GetDB().Raw(query, sql.Named("company_id", company_id)).Rows()
+	query := fmt.Sprintf(`select company_id from m_company
+	where delete_flag = 'N' and company_id = %v;`,company_id)
+	rows, _ := db.GetDB().Raw(query).Rows()
 	defer rows.Close()
 	for rows.Next() {
 		rows.Scan(&companyIdObj)

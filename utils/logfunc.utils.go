@@ -105,3 +105,21 @@ func GetAccessLogVillagerFile() *os.File {
 	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
 	return accessLogCompanyFile
 }
+
+func GetErrorLogUserFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s\\%s", constants.RootUser, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s\\api_user_error.log", directory)
+	errLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return errLogCompanyFile
+}
+
+func GetAccessLogUserFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s\\%s", constants.RootUser, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s\\api_user_access.log", directory)
+	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return accessLogCompanyFile
+}

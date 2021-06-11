@@ -4,6 +4,7 @@ import (
 	authen "bannayuu-web-admin/api/authen"
 	company "bannayuu-web-admin/api/company"
 	home "bannayuu-web-admin/api/home"
+	user "bannayuu-web-admin/api/user"
 	villager "bannayuu-web-admin/api/villager"
 	constants "bannayuu-web-admin/constants"
 	"bannayuu-web-admin/db"
@@ -21,6 +22,7 @@ func Setup(router *gin.Engine) {
 	company.SetupCompanyAPI(router)
 	home.SetupHomeAPI(router)
 	villager.SetupVillagerAPI(router)
+	user.SetupUserAPI(router)
 	setupTest(router)
 }
 

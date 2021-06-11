@@ -115,7 +115,7 @@ func createToken(userId int) (string, error) {
 	atClaims := jwt.MapClaims{}
 	atClaims["authorized"] = true
 	atClaims["employee_id"] = userId
-	atClaims["exp"] = time.Now().Add(time.Hour * 24).Unix()
+	atClaims["exp"] = time.Now().Add(time.Hour * 720).Unix()
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
 	accessToken := constants.GetJwtAccessToken()
 	os.Setenv("ACCESS_SECRET", accessToken) //this should be in an env file

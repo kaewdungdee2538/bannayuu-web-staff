@@ -10,6 +10,7 @@ var RootLogin string
 var RootCompany string
 var RootHome string
 var RootVillager string
+var RootUser string
 
 func SetupOSPath() {
 	runningDir, _ := os.Getwd()
@@ -20,5 +21,6 @@ func SetupOSPath() {
 	RootCompany = fmt.Sprintf("%s\\company", runningDir)
 	RootHome = fmt.Sprintf("%s\\home", runningDir)
 	RootVillager = fmt.Sprintf("%s\\villager", runningDir)
+	RootUser = fmt.Sprintf("%s\\user", runningDir)
 	//----------------------------------------------------------//
 }

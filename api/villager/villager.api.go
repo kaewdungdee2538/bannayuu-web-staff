@@ -19,5 +19,10 @@ func SetupVillagerAPI(router *gin.Engine) {
 			interceptor.JwtVerify,
 			interceptor_villager.CheckAddVillagerArrayValuesInterceptor,
 			controller_villager.AddVillagerArray)
+		authenApi.POST("/get-all",
+			interceptor.JwtVerify,
+			interceptor_villager.CheckGetVillagerValueInterceptor,
+			controller_villager.GetVillagerAll)
+
 	}
 }
