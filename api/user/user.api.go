@@ -22,10 +22,33 @@ func SetupUserAPI(router *gin.Engine) {
 		authenApi.POST("/get-user",
 			interceptor.JwtVerify,
 			interceptor_user.CheckGetUserInfoValueInterceptor,
-			controller_user.GetHomeAll)
+			controller_user.GetUserAll)
 		authenApi.POST("/get-userinfo-byid",
 			interceptor.JwtVerify,
 			interceptor_user.CheckGetUserInfoByIdValueInterceptor,
 			controller_user.GetHomeInfo)
+		authenApi.POST("/edit-userinfo",
+			interceptor.JwtVerify,
+			interceptor_user.CheckGetUserValueWhenEditInfoInterceptor,
+			controller_user.EditUser)
+		authenApi.POST("/change-privilege",
+			interceptor.JwtVerify,
+			interceptor_user.CheckChangePrivilegeUserValidateValuesInterceptor,
+			controller_user.ChangePrivilegeUser)
+		authenApi.POST("/get-user-is-below-myself",
+			interceptor.JwtVerify,
+			interceptor_user.CheckGetUserInfoValueInterceptor,
+			controller_user.GetUserIsBelowMyselfAll)
+		authenApi.POST("/change-main-company",
+			interceptor.JwtVerify,
+			interceptor_user.CheckChangeMainCompanyUserValidateValuesInterceptor,
+			controller_user.ChangeMainCompanyUser)
+		authenApi.POST("/addordelete-company-list",
+			interceptor.JwtVerify,
+			interceptor_user.CheckAddOrDeleteCompanyListUserValidateValuesInterceptor,
+			controller_user.AddOrDeleteCompanyListUser)
+		authenApi.POST("/get-privilege",
+			interceptor.JwtVerify,
+			controller_user.GetPrivilege)
 	}
 }

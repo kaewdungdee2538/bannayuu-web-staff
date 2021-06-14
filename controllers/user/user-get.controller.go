@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func GetHomeAll(c *gin.Context) {
+func GetUserAll(c *gin.Context) {
 	var userRequest model_user.UserGetRequestModel
 	var userResponse []model_user.UserGetResponseModel
 	
@@ -42,9 +42,9 @@ func GetHomeAll(c *gin.Context) {
 		).Rows()
 
 	if err != nil {
-		fmt.Printf("Get Employee Info By Employee ID error : %s", err)
+		fmt.Printf("Get Employee All error : %s", err)
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageFailed})
-		utils.WriteLogInterface(utils.GetErrorLogUserFile(), nil, fmt.Sprintf("Get Employee Info By Employee ID failed : %s", err))
+		utils.WriteLogInterface(utils.GetErrorLogUserFile(), nil, fmt.Sprintf("Get Employee All failed : %s", err))
 		defer rows.Close()
 	} else {
 		defer rows.Close()
@@ -54,8 +54,8 @@ func GetHomeAll(c *gin.Context) {
 			// do something
 		}
 
-		fmt.Printf("Get Employee Info By Employee ID successfully")
+		fmt.Printf("Get Employee Info All successfully")
 		c.JSON(http.StatusOK, gin.H{"error": false, "result": userResponse, "message": constants.MessageSuccess})
-		utils.WriteLogInterface(utils.GetAccessLogUserFile(), nil, "Get Employee Info By Employee ID successfully.")
+		utils.WriteLogInterface(utils.GetAccessLogUserFile(), nil, "Get Employee Info All successfully.")
 	}
 }

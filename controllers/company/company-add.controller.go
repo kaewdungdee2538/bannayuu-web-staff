@@ -17,7 +17,7 @@ func AddCompany(c *gin.Context) {
 	// jsonString := string(buf)
 	// fmt.Println(jsonString)
 	jwtemployeeid, _ := c.Get("jwt_employee_id")
-	fmt.Printf("companyModel : %v ", jwtemployeeid)
+	fmt.Printf("jwt_employee_id : %v ", jwtemployeeid)
 	var companyModelReq model_company.CompanyAddModelRequest
 	if err := c.ShouldBind(&companyModelReq); err == nil {
 		//----------Save image

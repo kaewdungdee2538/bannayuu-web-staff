@@ -1,14 +1,18 @@
 package interceptor
 
 import (
-	db "bannayuu-web-admin/db"
 	constants "bannayuu-web-admin/constants"
+	db "bannayuu-web-admin/db"
 	"database/sql"
 	"strings"
 )
 
 type UserInterceptorModel struct {
 	Employee_id   int
+}
+
+type UserPrivilegeInterceptorModel struct {
+	Employee_privilege_id   int
 }
 
 func checkUserIsDuplicateInbaseWhenCreateUser(typeUser string, userName string, comapnyId string) (bool, string) {
@@ -79,6 +83,24 @@ func checkEmployeeIdInBase(employeeId string,companyId string) (bool,string){
 	}
 	if userModel.Employee_id == 0 {
 		return true, constants.MessageUserNotInBase
+	}
+	return false, ""
+}
+
+func checkEmployeePrivilegeIdForCustomerInBase(employeePrivilegeId string,employeeType string) (bool,string){
+	var userPrivilegeModel UserPrivilegeInterceptorModel
+	query := `select employee_privilege_id from m_employee_privilege 
+	where employee_privilege_id = @employee_privilege_id and employee_privilege_type = @employee_type
+	and employee_privilege_id not in (6,7)`;
+	rows, _ := db.GetDB().Raw(query,sql.Named("employee_privilege_id",employeePrivilegeId),sql.Named("employee_type",employeeType)).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		rows.Scan(&userPrivilegeModel)
+		db.GetDB().ScanRows(rows, &userPrivilegeModel)
+		// do something
+	}
+	if userPrivilegeModel.Employee_privilege_id == 0 {
+		return true, constants.MessageUserPrivilegeNotInBase
 	}
 	return false, ""
 }
