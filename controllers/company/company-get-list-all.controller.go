@@ -30,7 +30,7 @@ func GetCompanyListAll(c *gin.Context) {
 		else 'NORMAL' end as status
 		from m_company 
 		where company_id  not in (select comid from comtbl)
-		order by company_code`
+		order by company_name`
 	rows, err := db.GetDB().Raw(query,
 		sql.Named("employee_id", jwtemployeeid),
 		).Rows()
