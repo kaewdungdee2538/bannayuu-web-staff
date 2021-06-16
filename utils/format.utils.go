@@ -35,6 +35,25 @@ func IsNotStringAlphabetForJSONString(str string) bool {
 	 return false
 }
 
+func IsNotStringAlphabetForLine(str string) bool {
+	const alpha = `-!#$%^&*\[\]{};':",<>?~`
+	for _, char := range str {  
+		if strings.Contains(alpha, strings.ToLower(string(char))) {
+		   return true
+		}
+	 }
+	 return false
+}
+
+func IsNotStringAlphabetForEmail(str string) bool {
+	const alpha = `!#$%^&*\[\]{};':",<>?~`
+	for _, char := range str {  
+		if strings.Contains(alpha, strings.ToLower(string(char))) {
+		   return true
+		}
+	 }
+	 return false
+}
 func IsNotStringEngOrNumber(str string) bool {
 	for _, charVariable := range str {
 		if (charVariable < 'a' || charVariable > 'z') && (charVariable < 'A' || charVariable > 'Z') && (charVariable < '0' || charVariable > '9') {

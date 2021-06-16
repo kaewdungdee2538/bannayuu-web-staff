@@ -49,7 +49,7 @@ type UserGetByIdRequestModel struct {
 }
 
 type UserInfoGetResponseModel struct {
-	Employee_id                string `json:"employee_id"`
+	Employee_id                int `json:"employee_id"`
 	Employee_code              string `json:"employee_code"`
 	First_name_th              string `json:"first_name_th"`
 	Last_name_th               string `json:"last_name_th"`
@@ -57,8 +57,10 @@ type UserInfoGetResponseModel struct {
 	Employee_telephone         string `json:"employee_telephone"`
 	Employee_mobile            string `json:"employee_mobile"`
 	Employee_line              string `json:"employee_line"`
+	Employee_email             string `json:"employee_email"`
 	Username                   string `json:"username"`
 	Remark                     string `json:"remark"`
+	Employee_privilege_id      int `json:"employee_privilege_id"`
 	Employee_privilege_name_th string `json:"employee_privilege_name_th"`
 	Employee_privilege_type    string `json:"employee_privilege_type"`
 	Create_by                  string `json:"create_by"`

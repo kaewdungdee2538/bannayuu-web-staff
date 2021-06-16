@@ -78,9 +78,9 @@ func checkUserAddRequest(userRequestModel *user_model.UserAddRequestModel) (bool
 		return true, constants.MessageMobileNotEqual10Character
 	} else if format_utls.IsNotStringNumber(mobile) {
 		return true, constants.MessageMobileNotNumber
-	} else if format_utls.IsNotStringAlphabetRemark(line) {
+	} else if format_utls.IsNotStringAlphabetForLine(line) {
 		return true, constants.MessageLineProhibitSpecial
-	} else if format_utls.IsNotStringAlphabetRemark(email) {
+	} else if format_utls.IsNotStringAlphabetForEmail(email) {
 		return true, constants.MessageEmailFormatInValid
 	} else if len(username) == 0 {
 		return true, constants.MessageUsernameNotFount

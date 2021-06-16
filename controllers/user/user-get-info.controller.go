@@ -23,8 +23,8 @@ func GetHomeInfo(c *gin.Context) {
 	}
 	query := `select me.employee_id,me.employee_code,me.first_name_th,me.last_name_th,
 	me.address,me.employee_telephone,me.employee_mobile,
-	me.employee_line,me.username,me.remark,
-	employee_privilege_name_th,employee_privilege_type,
+	me.employee_line,me.employee_email,me.username,me.remark,
+	me.employee_privilege_id,employee_privilege_name_th,employee_privilege_type,
 	concat(mecreate.first_name_th,' ',mecreate.last_name_th) as create_by,
 	to_char(me.create_date,'YYYY-MM-DD HH24:MI:SS') as create_date,
 	concat(meupdate.first_name_th,' ',meupdate.last_name_th) as update_by,
