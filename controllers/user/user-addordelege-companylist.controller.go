@@ -7,7 +7,6 @@ import (
 	"bannayuu-web-admin/utils"
 	"fmt"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 	// "io/ioutil"
 )
@@ -65,7 +64,13 @@ func saveAddOrDeleteCompanyListUserQuery(
 	rootCurrentDate string,
 	imageName string,
 ) {
-	//---------Convert obj setupdata to json string
+	// //---------Convert obj setupdata to json string
+	// err_company_list_obj, company_list_obj := convertCompanyArrayToJson(userPrivilegeModelReq.Company_list)
+	// if err_company_list_obj {
+	// 	c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
+	// 	utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
+	// 	return 
+	// }
 
 	err_all_obj, all_obj := convertStrucToJSONStringAllForAddOrDeleteCompanyListUser(userPrivilegeModelReq, jwtemployeeid, fmt.Sprintf("%s/%s", rootCurrentDate, imageName))
 	if err_all_obj {
@@ -117,3 +122,5 @@ func saveAddOrDeleteCompanyListUserQuery(
 		utils.WriteLogInterface(utils.GetAccessLogUserFile(), values, "Add or delete Company list user successfully.")
 	}
 }
+
+

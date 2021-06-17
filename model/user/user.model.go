@@ -49,7 +49,7 @@ type UserGetByIdRequestModel struct {
 }
 
 type UserInfoGetResponseModel struct {
-	Employee_id                int `json:"employee_id"`
+	Employee_id                int    `json:"employee_id"`
 	Employee_code              string `json:"employee_code"`
 	First_name_th              string `json:"first_name_th"`
 	Last_name_th               string `json:"last_name_th"`
@@ -60,7 +60,7 @@ type UserInfoGetResponseModel struct {
 	Employee_email             string `json:"employee_email"`
 	Username                   string `json:"username"`
 	Remark                     string `json:"remark"`
-	Employee_privilege_id      int `json:"employee_privilege_id"`
+	Employee_privilege_id      int    `json:"employee_privilege_id"`
 	Employee_privilege_name_th string `json:"employee_privilege_name_th"`
 	Employee_privilege_type    string `json:"employee_privilege_type"`
 	Create_by                  string `json:"create_by"`
@@ -70,6 +70,7 @@ type UserInfoGetResponseModel struct {
 	Delete_by                  string `json:"delete_by"`
 	Delete_date                string `json:"delete_date"`
 	Delete_flag                string `json:"delete_flag"`
+	Company_list               string `json:"company_list"`
 }
 
 type UserChangePrivilegeRequestModel struct {
@@ -93,7 +94,7 @@ type UserAddOrDeleteCompanyListRequestModel struct {
 	Image        *multipart.FileHeader `form:"image" binding:"required"`
 	Employee_id  string                `form:"employee_id"`
 	Company_id   string                `form:"company_id"`
-	Company_list []string              `form:"company_list"`
+	Company_list string                `form:"company_list"`
 	Remark       string                `form:"remark" `
 }
 

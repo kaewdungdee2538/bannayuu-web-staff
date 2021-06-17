@@ -31,7 +31,8 @@ func GetHomeInfo(c *gin.Context) {
 	to_char(me.update_date,'YYYY-MM-DD HH24:MI:SS') as update_date,
 	concat(medelete.first_name_th,' ',medelete.last_name_th) as delete_by,
 	to_char(me.delete_date,'YYYY-MM-DD HH24:MI:SS') as delete_date,
-	case when me.delete_flag = 'Y' then 'DISABLE' else 'NORMAL' end delete_flag
+	case when me.delete_flag = 'Y' then 'DISABLE' else 'NORMAL' end delete_flag,
+	me.company_list as company_list
 	from m_employee me
 	left join m_employee_privilege mep
 	on me.employee_privilege_id = mep.employee_privilege_id

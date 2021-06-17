@@ -71,7 +71,7 @@ func checkValuesUserChangePrivilege(userModel user_model.UserChangePrivilegeRequ
 		return true, constants.MessageEmployeeIdNotNumber
 	} else if len(remark) == 0 {
 		return true, constants.MessageRemarkNotFount
-	} else if format_utls.IsNotStringEngOrNumber(remark) {
+	} else if format_utls.IsNotStringAlphabetRemark(remark) {
 		return true, constants.MessageRemarkProhibitSpecial
 	} else if len(remark) < 10 {
 		return true, constants.MessageRemarkIsLower10Character
