@@ -25,7 +25,7 @@ func DisableCompany(c *gin.Context) {
 		errsaveimg := c.SaveUploadedFile(companyModelReq.Image, fileName)
 		if errsaveimg != nil {
 			c.String(http.StatusInternalServerError, constants.MessageImageNotFound)
-			utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageImageNotFound)
+			utils.WriteLog(utils.GetErrorLogCompanyFile(), constants.MessageImageNotFound)
 			return
 		}
 		//----------Query
@@ -46,7 +46,7 @@ func saveDisableCompanyQuery(
 	err_all_obj, all_obj := convertStrucToJSONStringAllForDisable(companyModelReq, jwtemployeeid, fmt.Sprintf("%s/%s", rootCurrentDate, imageName))
 	if err_all_obj {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
+		utils.WriteLog(utils.GetErrorLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 	query := fmt.Sprintf(`
@@ -85,7 +85,7 @@ func saveDisableCompanyQuery(
 	if err, message := db.SaveTransactionDB(query, values); err {
 		fmt.Printf("Disable company error : %s", message)
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageFailed})
-		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), values, fmt.Sprintf("Disable company failed : %s",message))
+		utils.WriteLogInterface(utils.GetErrorLogCompanyFile(), values, fmt.Sprintf("Disable company failed : %s",message))
 	} else {
 		fmt.Printf("Disable company successfully")
 		c.JSON(http.StatusOK, gin.H{"error": false, "result": nil, "message": constants.MessageSuccess})

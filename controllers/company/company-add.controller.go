@@ -30,7 +30,7 @@ func AddCompany(c *gin.Context) {
 		errsaveimg := c.SaveUploadedFile(companyModelReq.Image, fileName)
 		if errsaveimg != nil {
 			c.String(http.StatusInternalServerError, constants.MessageImageNotFound)
-			utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageImageNotFound)
+			utils.WriteLog(utils.GetErrorLogCompanyFile(), constants.MessageImageNotFound)
 			return
 		}
 		//----------Query
@@ -38,7 +38,7 @@ func AddCompany(c *gin.Context) {
 		fmt.Printf("companyModel : %v ", companyModelReq)
 
 	} else {
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCombineFailed)
+		utils.WriteLog(utils.GetErrorLogCompanyFile(), constants.MessageCombineFailed)
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCombineFailed})
 	}
 }
@@ -122,28 +122,28 @@ func saveAddCompanyQuery(
 	err_setup_cal, setup_data_calculate := convertStrucToJSONStringSetupCalForAdd(companyModelReq)
 	if err_setup_cal {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
+		utils.WriteLog(utils.GetErrorLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 	//--------Visitor In Security setup object
 	err_setup_visitor_in, setup_data_visitor_in := convertStrucToJSONStringSetupVisitorInForAdd(companyModelReq)
 	if err_setup_visitor_in {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
+		utils.WriteLog(utils.GetErrorLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 	//--------Visitor Out Security setup object
 	err_setup_visitor_out, setup_data_visitor_out := convertStrucToJSONStringSetupVisitorOutForAdd(companyModelReq)
 	if err_setup_visitor_out {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
+		utils.WriteLog(utils.GetErrorLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 
 	err_all_obj, all_obj := convertStrucToJSONStringAllForAdd(companyModelReq, jwtemployeeid, fmt.Sprintf("%s/%s", rootCurrentDate, imageName))
 	if err_all_obj {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCovertObjTOJSONFailed})
-		utils.WriteLog(utils.GetAccessLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
+		utils.WriteLog(utils.GetErrorLogCompanyFile(), constants.MessageCovertObjTOJSONFailed)
 		return
 	}
 	query := `
@@ -256,7 +256,7 @@ func saveAddCompanyQuery(
 	if err, message := db.SaveTransactionDB(query, values); err {
 		fmt.Printf("add company Failed")
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageFailed})
-		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), values, fmt.Sprintf("Add company Failed : %s", message))
+		utils.WriteLogInterface(utils.GetErrorLogCompanyFile(), values, fmt.Sprintf("Add company Failed : %s", message))
 	} else {
 		fmt.Printf("add company successfully")
 		c.JSON(http.StatusOK, gin.H{"error": false, "result": nil, "message": constants.MessageSuccess})

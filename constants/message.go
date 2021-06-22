@@ -71,4 +71,4 @@ const MessageEmployeeTypeProhibitSpecial = "ประเภทของ User ห
 const MessageEmployeeIdNotFound = "ไม่พบรหัสพนักงาน"
 const MessageEmployeeIdNotNumber = "รหัสพนักงานต้องเป็นตัวเลขเท่านั้น"
 const MessageUserNotInBase = "ไม่พบพนักงานในระบบ"
-const MessageUserPrivilegeNotInBase = "ไม่พบสิทธิ์การเข้าใช้งานในระบบ"
+const MessageUserPrivilegeNotInBase = "ไม่พบสิทธิ์การเข้าใช้งานในระบบ หรือสิทธิ์ที่เลือกไม่ได้รับอนุญาติให้ใช้งาน"

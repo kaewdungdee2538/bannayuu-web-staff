@@ -40,7 +40,7 @@ func GetCompanyAll(c *gin.Context) {
 	if err != nil {
 		fmt.Printf("Get company error : %s", err)
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageFailed})
-		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), nil, fmt.Sprintf("Get company failed : %s", err))
+		utils.WriteLogInterface(utils.GetErrorLogCompanyFile(), nil, fmt.Sprintf("Get company failed : %s", err))
 		defer rows.Close()
 	} else {
 		defer rows.Close()

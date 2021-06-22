@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func GetCompanyAllNotDisable(c *gin.Context) {
+func GetCompanyAllIsNotCitCompany(c *gin.Context) {
 	var companyRequest model_company.CompanyGetAllRequest
 	var companyResponseDb []model_company.CompanyGetAllResponse
 	if err := c.ShouldBind(&companyRequest); err != nil {
@@ -25,7 +25,7 @@ func GetCompanyAllNotDisable(c *gin.Context) {
 	when current_timestamp < company_start_date then 'NOTOPEN'
 	when current_timestamp > company_expire_date then 'EXPIRE'
 	else 'NORMAL' end as status
-	from m_company where delete_flag = 'N' and current_timestamp < company_expire_date`
+	from m_company where company_id != 999`
 	if companyRequest.Company_code_or_name != ""  {
 		query += ` and (company_code = @company_code or company_name LIKE @company_name)`
 	}
@@ -38,9 +38,9 @@ func GetCompanyAllNotDisable(c *gin.Context) {
 		).Rows()
 
 	if err != nil {
-		fmt.Printf("Get company not disable error : %s", err)
+		fmt.Printf("Get company all is not cit company error : %s", err)
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageFailed})
-		utils.WriteLogInterface(utils.GetErrorLogCompanyFile(), nil, fmt.Sprintf("Get company failed : %s", err))
+		utils.WriteLogInterface(utils.GetErrorLogCompanyFile(), nil, fmt.Sprintf("Get company all is not cit company failed : %s", err))
 		defer rows.Close()
 	} else {
 		defer rows.Close()
@@ -49,8 +49,9 @@ func GetCompanyAllNotDisable(c *gin.Context) {
 			db.GetDB().ScanRows(rows, &companyResponseDb)
 			// do something
 		}
-		fmt.Printf("Get company not disable successfully")
-		c.JSON(http.StatusOK, gin.H{"error": false, "result":companyResponseDb, "message": constants.MessageSuccess})
-		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), nil, "Get company successfully.")
+
+		fmt.Printf("Get company all is not cit company successfully")
+		c.JSON(http.StatusOK, gin.H{"error": false, "result": companyResponseDb, "message": constants.MessageSuccess})
+		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), nil, "Get company all is not cit company successfully.")
 	}
 }
