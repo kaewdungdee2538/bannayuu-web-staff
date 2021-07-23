@@ -55,13 +55,13 @@ func CheckGetVillagerValueInterceptor(c *gin.Context) {
 	}
 }
 func checkValueFullName(villagerModel VillagerGetAllInterceptorModel) (bool, string){
-	if format_utls.IsNotStringAlphabetRemark(villagerModel.Full_name){
+	if format_utls.IsNotStringAlphabetForJSONString(villagerModel.Full_name){
 		return true, constants.MessageFullNameProhitbitSpecial
 	}
 	return checkValueHomeAddress(villagerModel)
 }
 func checkValueHomeAddress(villagerModel VillagerGetAllInterceptorModel) (bool, string) {
-	if format_utls.IsNotStringAlphabetRemark(villagerModel.Home_address) {
+	if format_utls.IsNotStringAlphabetForJSONString(villagerModel.Home_address) {
 		return true, constants.MessageHomeAddressProhibitSpecial
 	}
 	return intercep_home.CheckValueCompanyIdNotDisavle(villagerModel.Company_id)

@@ -19,11 +19,11 @@ func addVillagerMiddleware(villagerModelReq *villager_model.VillagerRequestModel
 		return true, fmt.Sprintf("%s ,[ที่อยู่ : %s]", constants.MessageHomeAddressProhibitSpecial, Home_address)
 	} else if len(First_name) == 0 {
 		return true, constants.MessageFirstNameNotFound
-	} else if utils.IsNotStringAlphabet(First_name) {
+	} else if utils.IsNotStringAlphabetForJSONString(First_name) {
 		return true,  fmt.Sprintf("%s ,[ชื่อ : %s]",constants.MessageFirstNameProhitbitSpecial,First_name)
 	} else if len(Last_name) == 0 {
 		return true, constants.MessageLastNameNotFound
-	} else if utils.IsNotStringAlphabet(Last_name) {
+	} else if utils.IsNotStringAlphabetForJSONString(Last_name) {
 		return true, fmt.Sprintf("%s ,[นามสกุล : %s]",constants.MessageLastNameProhitbitSpecial,Last_name) 
 	} else if len(Tel_number) == 0 {
 		return true, constants.MessageTelNumberNotFound

@@ -6,9 +6,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type HomeAddressInterceptorModel struct {
@@ -54,7 +55,7 @@ func CheckHomeAddressValueInterceptor(c *gin.Context) {
 }
 
 func CheckValueHomeAddressNotDisavle(homeAddressObj HomeAddressInterceptorModel) (bool, string) {
-	if format_utls.IsNotStringAlphabetRemark(homeAddressObj.Home_address) {
+	if format_utls.IsNotStringAlphabetForJSONString(homeAddressObj.Home_address) {
 		return true, constants.MessageHomeAddressProhibitSpecial
 	}
 	return CheckValueCompanyIdNotDisavle(homeAddressObj.Company_id)

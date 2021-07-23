@@ -6,6 +6,7 @@ import (
 	model_company "bannayuu-web-admin/model/company"
 	"bannayuu-web-admin/utils"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -13,7 +14,7 @@ import (
 
 func GetCompanyById(c *gin.Context) {
 	var companyRequestDb model_company.CompanyGetByIdResquest
-	var companyResponseDb model_company.CompanyGetByIdResponse
+	var companyResponseDb model_company.CompanyGetByIdFromDBResponse
 	if err := c.ShouldBind(&companyRequestDb); err != nil {
 		fmt.Printf("Combine Error : %s", err)
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCombineFailed})
@@ -39,6 +40,7 @@ func GetCompanyById(c *gin.Context) {
 	,ms.setup_data->>'except_time_split_from_day' as except_time_split_from_day
 	,ms2.setup_data->>'booking_estamp_verify' as booking_estamp_verify
 	,ms2.setup_data->>'visitor_estamp_verify' as visitor_estamp_verify
+	,mc.line_company_data
 	from m_company mc
 	left join m_setup ms
 	on mc.company_id = ms.company_id
@@ -67,8 +69,37 @@ func GetCompanyById(c *gin.Context) {
 			utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), nil, "Get by id company Not In Base.")
 			return
 		}
+		resCompanyInfo := convetDataFromDbToResData(companyResponseDb)
 		fmt.Printf("Get by id company successfully")
-		c.JSON(http.StatusOK, gin.H{"error": false, "result": companyResponseDb, "message": constants.MessageSuccess})
+		c.JSON(http.StatusOK, gin.H{"error": false, "result": resCompanyInfo, "message": constants.MessageSuccess})
 		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), nil, "Get by id company successfully.")
 	}
+}
+
+func convetDataFromDbToResData(companyResponseDb model_company.CompanyGetByIdFromDBResponse) model_company.CompanyGetByIdResponse {
+	var lineCompanyDataMap map[string]interface{}
+	json.Unmarshal([]byte(companyResponseDb.Line_company_data), &lineCompanyDataMap)
+	companyRes := model_company.CompanyGetByIdResponse{
+		Company_id:                 companyResponseDb.Company_id,
+		Company_code:               companyResponseDb.Company_code,
+		Company_name:               companyResponseDb.Company_name,
+		Company_promotion:          companyResponseDb.Company_promotion,
+		Company_start_date:         companyResponseDb.Company_start_date,
+		Company_expire_date:        companyResponseDb.Company_expire_date,
+		Status:                     companyResponseDb.Status,
+		Company_remark:             companyResponseDb.Company_remark,
+		Create_by:                  companyResponseDb.Create_by,
+		Create_date:                companyResponseDb.Create_date,
+		Update_by:                  companyResponseDb.Update_by,
+		Update_date:                companyResponseDb.Update_date,
+		Delete_by:                  companyResponseDb.Delete_by,
+		Delete_date:                companyResponseDb.Delete_date,
+		Calculate_enable:           companyResponseDb.Calculate_enable,
+		Price_of_cardloss:          companyResponseDb.Price_of_cardloss,
+		Except_time_split_from_day: companyResponseDb.Except_time_split_from_day,
+		Booking_estamp_verify:      companyResponseDb.Booking_estamp_verify,
+		Visitor_estamp_verify:      companyResponseDb.Visitor_estamp_verify,
+		Line_company_data:          lineCompanyDataMap,
+	}
+	return companyRes
 }

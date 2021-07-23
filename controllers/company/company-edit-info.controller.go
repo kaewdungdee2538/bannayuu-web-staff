@@ -59,6 +59,7 @@ func convertStrucToJSONStringAllForEdit(companyModelReq model_company.CompanyEdi
 		"calculate_enable":           companyModelReq.Calculate_enable,
 		"except_time_split_from_day": companyModelReq.Except_time_split_from_day,
 		"price_of_cardloss":          companyModelReq.Price_of_cardloss,
+		"line_company_data":          companyModelReq.Line_company_data,
 		"image":                      fileName}
 	err, setup_data := utils.ConvertInterfaceToJSON(req_map)
 	if err {
@@ -108,6 +109,7 @@ func saveEditCompanyQuery(
 			,company_start_date = @company_start_date
 			,company_expire_date = @company_expire_date
 			,company_remark = @remark
+			,line_company_data = @line_company_data
 			,update_by = @update_by
 			,update_date = current_timestamp
 			where company_id = @company_id
@@ -139,6 +141,12 @@ func saveEditCompanyQuery(
 			)
 			`, companyModelReq.Company_id)
 
+	var line_data string
+	if len(companyModelReq.Line_company_data) == 0 {
+		line_data = "{}"
+	}else{
+		line_data = companyModelReq.Line_company_data
+	}
 	values := map[string]interface{}{
 		"company_id":             companyModelReq.Company_id,
 		"company_code":           companyModelReq.Company_code,
@@ -151,6 +159,7 @@ func saveEditCompanyQuery(
 		"setup_data_calculate":   setup_data_calculate,
 		"setup_data_visitor_in":  setup_data_visitor_in,
 		"setup_data_visitor_out": setup_data_visitor_out,
+		"line_company_data":      line_data,
 		"log_data":               all_obj}
 
 	if err, message := db.SaveTransactionDB(query, values); err {
@@ -163,7 +172,6 @@ func saveEditCompanyQuery(
 		utils.WriteLogInterface(utils.GetAccessLogCompanyFile(), values, "Edit company successfully.")
 	}
 }
-
 
 func convertStrucToJSONStringSetupCalForEdit(companyModelReq model_company.CompanyEditModelRequest) (bool, string) {
 	//---------Convert obj to json string

@@ -68,7 +68,7 @@ func checkValuesAddCompany(companyModel model_company.CompanyAddModelRequest) (b
 		return true, constants.MessageCompanyCodeIsSpecialProhibit
 	} else if len(Company_name) == 0 {
 		return true, constants.MessageCompanyNameNotFount
-	} else if format_utls.IsNotStringAlphabet(Company_name) {
+	} else if format_utls.IsNotStringAlphabetRemark(Company_name) {
 		return true, constants.MessageCompanyNameIsSpecialProhibit
 	} else if len(Company_promotion) == 0 {
 		return true, constants.MessageCompanyProNotFound

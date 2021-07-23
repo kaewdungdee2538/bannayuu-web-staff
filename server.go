@@ -18,7 +18,7 @@ func main() {
 		//---setup static pah
 		router.Static("images", constants.RootImages)
 		//---setup CORS
-		// router.Use(CORSMiddleware())
+		router.Use(CORSMiddleware())
 		//---setup logfile
 		constants.SetupOSPath()
 		//---logger
