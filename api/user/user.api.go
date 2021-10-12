@@ -13,42 +13,46 @@ import (
 func SetupUserAPI(router *gin.Engine) {
 	userApiHTTP := constants.GetUserHTTPClient()
 	fmt.Printf("user api http : %s", userApiHTTP)
-	authenApi := router.Group(userApiHTTP)
+	userApi := router.Group(userApiHTTP)
 	{
-		authenApi.POST("/create-user",
+		userApi.POST("/create-user",
 			interceptor.JwtVerify,
 			interceptor_user.CheckGetUserValueInterceptor,
 			controller_user.AddUser)
-		authenApi.POST("/get-user",
+		userApi.POST("/get-user",
 			interceptor.JwtVerify,
 			interceptor_user.CheckGetUserInfoValueInterceptor,
 			controller_user.GetUserAll)
-		authenApi.POST("/get-userinfo-byid",
+		userApi.POST("/get-userinfo-byid",
 			interceptor.JwtVerify,
 			interceptor_user.CheckGetUserInfoByIdValueInterceptor,
 			controller_user.GetHomeInfo)
-		authenApi.POST("/edit-userinfo",
+		userApi.POST("/edit-userinfo",
 			interceptor.JwtVerify,
 			interceptor_user.CheckGetUserValueWhenEditInfoInterceptor,
 			controller_user.EditUser)
-		authenApi.POST("/change-privilege",
+		userApi.POST("/change-privilege",
 			interceptor.JwtVerify,
 			interceptor_user.CheckChangePrivilegeUserValidateValuesInterceptor,
 			controller_user.ChangePrivilegeUser)
-		authenApi.POST("/get-user-is-below-myself",
+		userApi.POST("/get-user-is-below-myself",
 			interceptor.JwtVerify,
 			interceptor_user.CheckGetUserInfoValueInterceptor,
 			controller_user.GetUserIsBelowMyselfAll)
-		authenApi.POST("/change-main-company",
+		userApi.POST("/change-main-company",
 			interceptor.JwtVerify,
 			interceptor_user.CheckChangeMainCompanyUserValidateValuesInterceptor,
 			controller_user.ChangeMainCompanyUser)
-		authenApi.POST("/addordelete-company-list",
+		userApi.POST("/addordelete-company-list",
 			interceptor.JwtVerify,
 			interceptor_user.CheckAddOrDeleteCompanyListUserValidateValuesInterceptor,
 			controller_user.AddOrDeleteCompanyListUser)
-		authenApi.POST("/get-privilege",
+		userApi.POST("/get-privilege",
 			interceptor.JwtVerify,
 			controller_user.GetPrivilege)
+		userApi.POST("/reset-password",
+			interceptor.JwtVerify,
+			interceptor_user.CheckResetPasswordUserValueInterceptor,
+			controller_user.ResetPasswordUser)
 	}
 }

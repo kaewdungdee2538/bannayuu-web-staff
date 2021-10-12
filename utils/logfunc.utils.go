@@ -123,3 +123,21 @@ func GetAccessLogUserFile() *os.File {
 	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
 	return accessLogCompanyFile
 }
+
+func GetErrorLogUserResetPasswordFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootUserResetPassword, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_user_reset_password_error.log", directory)
+	errLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return errLogCompanyFile
+}
+
+func GetAccessLogUserResetPasswordFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootUserResetPassword, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_user_reset_password_access.log", directory)
+	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return accessLogCompanyFile
+}

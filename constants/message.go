@@ -72,3 +72,6 @@ const MessageEmployeeIdNotFound = "ไม่พบรหัสพนักงา
 const MessageEmployeeIdNotNumber = "รหัสพนักงานต้องเป็นตัวเลขเท่านั้น"
 const MessageUserNotInBase = "ไม่พบพนักงานในระบบ"
 const MessageUserPrivilegeNotInBase = "ไม่พบสิทธิ์การเข้าใช้งานในระบบ หรือสิทธิ์ที่เลือกไม่ได้รับอนุญาติให้ใช้งาน"
+
+const MessageHoldTimeNotFound = "ไม่พบเวลาที่กำหนด"
+const MessageHoldTimeIsProhibitSpecial = "เวลาที่กำหนดห้ามมีอักษรพิเศษ ดังนี้ " + `/!@#$%^&*()_+\-=\[\]{};':"|,.<>\/?~`
