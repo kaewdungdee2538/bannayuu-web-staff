@@ -121,6 +121,10 @@ func saveEditCompanyQuery(
 		editsetupsecure as (update m_setup set
 			setup_data = @setup_data_visitor_out
 			where ref_setup_id = 3 and company_id = @company_id
+		),
+		editsetupactionin as (update m_setup set
+			setup_data = @setup_data_visitor_in
+			where ref_setup_id = 1 and company_id = @company_id
 		)
 		insert into log_company(
 				lc_code
@@ -200,9 +204,18 @@ func convertStrucToJSONStringSetupVisitorInForEdit(companyModelReq model_company
 	} else {
 		Visitor_verify = companyModelReq.Visitor_verify
 	}
+	var Line_notification_mode string
+	if companyModelReq.Line_notification_broadcast {
+		Line_notification_mode = "broadcast"
+	} else {
+		Line_notification_mode = "not_broadcast"
+	}
+
 	setup_data_map := map[string]interface{}{
 		"booking_verify": Booking_verify,
-		"visitor_verify": Visitor_verify}
+		"visitor_verify": Visitor_verify,
+		"line_notification_mode":Line_notification_mode,
+	}
 	err, setup_data := utils.ConvertInterfaceToJSON(setup_data_map)
 	if err {
 		return true, ""

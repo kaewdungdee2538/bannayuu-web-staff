@@ -69,9 +69,17 @@ func convertStrucToJSONStringSetupVisitorInForAdd(companyModelReq model_company.
 	} else {
 		Visitor_verify = companyModelReq.Visitor_verify
 	}
+	var Line_notification_mode string
+	if companyModelReq.Line_notification_broadcast {
+		Line_notification_mode = "broadcast"
+	} else {
+		Line_notification_mode = "not_broadcast"
+	}
 	setup_data_map := map[string]interface{}{
 		"booking_verify": Booking_verify,
-		"visitor_verify": Visitor_verify}
+		"visitor_verify": Visitor_verify,
+		"line_notification_mode":Line_notification_mode,
+	}
 	err, setup_data := utils.ConvertInterfaceToJSON(setup_data_map)
 	if err {
 		return true, ""
