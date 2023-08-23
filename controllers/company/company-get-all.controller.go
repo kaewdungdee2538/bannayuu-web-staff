@@ -5,7 +5,6 @@ import (
 	db "bannayuu-web-admin/db"
 	model_company "bannayuu-web-admin/model/company"
 	"bannayuu-web-admin/utils"
-	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -19,23 +18,27 @@ func GetCompanyAll(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": constants.MessageCombineFailed})
 		return
 	}
-	query := `select company_id,company_code
+	query := `with input_data AS (
+		SELECT
+			$1::TEXT AS company_code_or_name
+	)
+	select company_id,company_code
 	,company_name,company_promotion
 	,case when delete_flag = 'Y' then 'DISABLE'
 	when current_timestamp < company_start_date then 'NOTOPEN'
 	when current_timestamp > company_expire_date then 'EXPIRE'
 	else 'NORMAL' end as status
 	from m_company where company_id IS NOT NULL`
-	if companyRequest.Company_code_or_name != ""  {
-		query += ` and (company_code = @company_code or company_name LIKE @company_name)`
+	if companyRequest.Company_code_or_name != "" {
+		query += ` and (company_code LIKE (SELECT company_code_or_name FROM input_data) or company_name LIKE (SELECT company_code_or_name FROM input_data))`
 	}
 	query += ` order by company_code;`
 	likeStr := "%"
-	Company_name := fmt.Sprintf("%s%s%s", likeStr, companyRequest.Company_code_or_name, likeStr)
+	Company_code_name := fmt.Sprintf("%s%s%s", likeStr, companyRequest.Company_code_or_name, likeStr)
+
 	rows, err := db.GetDB().Raw(query,
-		sql.Named("company_code", companyRequest.Company_code_or_name),
-		sql.Named("company_name", Company_name),
-		).Rows()
+		Company_code_name,
+	).Rows()
 
 	if err != nil {
 		fmt.Printf("Get company error : %s", err)

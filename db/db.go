@@ -1,10 +1,9 @@
 package db
 
 import (
-	constants "bannayuu-web-admin/constants"
-	"fmt"
-
-	"gorm.io/driver/postgres"
+	"bannayuu-web-admin/constants"
+	"github.com/kaewdungdee2538/ouanfunction/numeric"
+	"github.com/kaewdungdee2538/ouanfunction/pg_db"
 	"gorm.io/gorm"
 )
 
@@ -14,15 +13,21 @@ func GetDB() *gorm.DB {
 	return db
 }
 
-func SetupDB() {
-	dsn := fmt.Sprintf("host=%s user=cit password=db13apr dbname=%s port=%s sslmode=disable TimeZone=Asia/Bangkok", constants.DbHost, constants.DbName, constants.DbPort)
-	fmt.Println(dsn)
-	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic("connect to database failed")
+func SetupDB(dbHost string, dbUserName string, dbPassword string, dbName string, dbPort string, maxIdleStr string, maxConnectionsStr string) {
+	maxIdle := numeric.ConvertStringToInt(maxIdleStr)
+	maxConnections := numeric.ConvertStringToInt(maxConnectionsStr)
+	if (maxConnections == 0){
+		maxConnections = 20
 	}
+	// connect postgresql databse by ouanfunction/pg_db
+	database, err := pg_db.SetupDB(dbHost, dbUserName, dbPassword, dbName, dbPort, maxIdle, maxConnections)
+	if err != nil {
+		panic(err)
+	}
+	// set database reference to global variable
 	db = database
 }
+
 
 func SaveTransactionDB(query string,value map[string]interface{}) (bool, string) {
 	tx := GetDB().Begin()
