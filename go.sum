@@ -228,6 +228,8 @@ github.com/jstemmer/go-junit-report v0.9.1 h1:6QPYqodiu3GuPL+7mfx+NwDdp2eTkp9IfE
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/kaewdungdee2538/ouanfunction v1.2.5 h1:a2aaT+xVrgtiu4ZJn/UPjGx86k1DtXldJNhAOgKTDiI=
 github.com/kaewdungdee2538/ouanfunction v1.2.5/go.mod h1:D1H0z3wZy/R7VvsA8OFLJYOyjRaRIdNXmIaSJtDdDm0=
+github.com/kaewdungdee2538/ouanfunction v1.2.8 h1:1ASE9td33iRiSzkJ/XfXXkFivw4ZgvZp6M2v6QbnbKs=
+github.com/kaewdungdee2538/ouanfunction v1.2.8/go.mod h1:D1H0z3wZy/R7VvsA8OFLJYOyjRaRIdNXmIaSJtDdDm0=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/klauspost/compress v1.13.6/go.mod h1:/3/Vjq9QcHkK5uEr5lBEmyoZ1iFhe47etQ6QUkpK6sk=
 github.com/klauspost/cpuid/v2 v2.0.9/go.mod h1:FInQzS24/EEf25PyTYn52gqo7WaD8xa0213Md/qVLRg=

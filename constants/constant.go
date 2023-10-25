@@ -8,10 +8,17 @@ import (
 //-----------------Database
 var DbHost = "uat.bannayuu.com"
 var DbName = "uat_cit_bannayuu_db"
-const DbUserName = "cit"
-const DbPassword = "db13apr"
 var DbPort = "5432"
 var AppPort = ":4501"
+
+//----------------demo
+// const DbUserName = "postgres"
+// const DbPassword = "P@ssw0rd"
+//----------------uat and production
+const DbUserName = "cit"
+const DbPassword = "db13apr"
+
+
 var RootImages = "F:/API/myvilla/web-admin/back/uploads/images"
 var WEB_MANAGEMENT_RESET_USER = ""
 

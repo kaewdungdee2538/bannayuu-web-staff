@@ -23,7 +23,8 @@ func AddVillagerArray(c *gin.Context) {
 		for i, value := range villagerModelArrReq.Data {
 			fmt.Println(i, value)
 			//---------------Middleware
-			if err, messageMiddleware := addVillagerMiddleware(&value); err {
+			if err, messageMiddleware := addVillagerMiddleware(value); err {
+				fmt.Println(messageMiddleware)
 				c.JSON(http.StatusOK, gin.H{"error": true, "result": nil, "message": messageMiddleware})
 				utils.WriteLogInterface(utils.GetAccessLogVillagerFile(), nil, messageMiddleware)
 				return
