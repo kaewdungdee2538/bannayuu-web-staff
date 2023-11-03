@@ -6,6 +6,7 @@ import (
 	home "bannayuu-web-admin/api/home"
 	user "bannayuu-web-admin/api/user"
 	villager "bannayuu-web-admin/api/villager"
+	slot_api "bannayuu-web-admin/api/slot"
 	constants "bannayuu-web-admin/constants"
 	"bannayuu-web-admin/db"
 	interceptor "bannayuu-web-admin/interceptor/jwt"
@@ -23,6 +24,7 @@ func Setup(router *gin.Engine) {
 	home.SetupHomeAPI(router)
 	villager.SetupVillagerAPI(router)
 	user.SetupUserAPI(router)
+	slot_api.SetupSlotAPI(router)
 	setupTest(router)
 }
 

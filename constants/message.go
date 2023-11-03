@@ -75,3 +75,8 @@ const MessageUserPrivilegeNotInBase = "ไม่พบสิทธิ์กา�
 
 const MessageHoldTimeNotFound = "ไม่พบเวลาที่กำหนด"
 const MessageHoldTimeIsProhibitSpecial = "เวลาที่กำหนดห้ามมีอักษรพิเศษ ดังนี้ " + `/!@#$%^&*()_+\-=\[\]{};':"|,.<>\/?~`
+
+const MessageSlotCountNotFound = "กรุณาระบุจำนวนเลข Slot ที่ต้องการเพิ่ม"
+const MessageGuadhouseIdNotFound = "กรุณาระบุ Guadhouse ID"
+const MessageGuadhouseCodeNotFound = "กรุณาระบุ Guadhouse Code"
+const MessageGuadhouseCodeNotEngOrNumber = "Guadhouse Code ต้องเป็นตัวเลขหรือภาษาอังกฤษเท่านั้น"

@@ -141,3 +141,40 @@ func GetAccessLogUserResetPasswordFile() *os.File {
 	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
 	return accessLogCompanyFile
 }
+
+func GetErrorLogAddSlotManualFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootSlot, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_add_slot_maunal_error.log", directory)
+	errLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return errLogCompanyFile
+}
+
+func GetAccessLogAddSlotManualFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootSlot, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_add_slot_maunal_access.log", directory)
+	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return accessLogCompanyFile
+}
+
+
+func GetErrorLogGetSlotFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootSlot, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_get_slot_error.log", directory)
+	errLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return errLogCompanyFile
+}
+
+func GetAccessLogGetSlotFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootSlot, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_get_slot_access.log", directory)
+	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return accessLogCompanyFile
+}
