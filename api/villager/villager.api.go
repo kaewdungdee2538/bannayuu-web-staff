@@ -23,6 +23,14 @@ func SetupVillagerAPI(router *gin.Engine) {
 			interceptor.JwtVerify,
 			interceptor_villager.CheckGetVillagerValueInterceptor,
 			controller_villager.GetVillagerAll)
+		authenApi.POST("/disable",
+			interceptor.JwtVerify,
+			interceptor_villager.CheckDisableVillagerValueInterceptor,
+			controller_villager.VillagerDisableById)
+		authenApi.POST("/enable",
+			interceptor.JwtVerify,
+			interceptor_villager.CheckEnableVillagerValueInterceptor,
+			controller_villager.VillagerEnableById)
 
 	}
 }

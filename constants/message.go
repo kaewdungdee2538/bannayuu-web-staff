@@ -80,3 +80,7 @@ const MessageSlotCountNotFound = "กรุณาระบุจำนวนเ�
 const MessageGuadhouseIdNotFound = "กรุณาระบุ Guadhouse ID"
 const MessageGuadhouseCodeNotFound = "กรุณาระบุ Guadhouse Code"
 const MessageGuadhouseCodeNotEngOrNumber = "Guadhouse Code ต้องเป็นตัวเลขหรือภาษาอังกฤษเท่านั้น"
+
+const MessageHomeLineIdNotFound = "กรุณาระบุ ID ลูกบ้าน"
+const MessageHomeLineIdNotNumber = "ID ลูกบ้านต้องเป็นตัวเลขเท่านั้น"
+const MessageHomeLineNotInBase = "ไม่พบลูกบ้านในระบบ"

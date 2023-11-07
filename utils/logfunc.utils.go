@@ -178,3 +178,40 @@ func GetAccessLogGetSlotFile() *os.File {
 	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
 	return accessLogCompanyFile
 }
+
+
+func GetErrorLogVillagerDisableFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootVillager, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_villager_disable_error.log", directory)
+	errLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return errLogCompanyFile
+}
+
+func GetAccessLogVillagerDisableFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootVillager, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_villager_disable_access.log", directory)
+	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return accessLogCompanyFile
+}
+
+func GetErrorLogVillagerEnableFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootVillager, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_villager_enable_error.log", directory)
+	errLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return errLogCompanyFile
+}
+
+func GetAccessLogVillagerEnableFile() *os.File {
+	directory_date := GetDirectoryDate()
+	directory := fmt.Sprintf("%s/%s", constants.RootVillager, directory_date)
+	CheckDirectory(directory)
+	root_str := fmt.Sprintf("%s/api_villager_enable_access.log", directory)
+	accessLogCompanyFile, _ := os.OpenFile(root_str, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	return accessLogCompanyFile
+}
