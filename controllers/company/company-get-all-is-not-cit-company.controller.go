@@ -26,12 +26,13 @@ func GetCompanyAllIsNotCitCompany(c *gin.Context) {
 	when current_timestamp > company_expire_date then 'EXPIRE'
 	else 'NORMAL' end as status
 	from m_company where company_id != 999`
-	if companyRequest.Company_code_or_name != ""  {
+	
 		query += ` and (company_code = @company_code or company_name LIKE @company_name)`
-	}
+	
 	query += ` order by company_code;`
 	likeStr := "%"
 	Company_name := fmt.Sprintf("%s%s%s", likeStr, companyRequest.Company_code_or_name, likeStr)
+	
 	rows, err := db.GetDB().Raw(query,
 		sql.Named("company_code", companyRequest.Company_code_or_name),
 		sql.Named("company_name", Company_name),
