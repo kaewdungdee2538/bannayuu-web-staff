@@ -70,7 +70,7 @@ func addSlotManualToDb(slotAddReq slot_model.SlotAddRequest, jwtemployeeid inter
 		LEFT JOIN select_max_slot_number msn
 		ON ind.company_id = msn.company_id
 	)
-	SELECT func_addvisitorslot(
+	SELECT func_addvisitorslot_manual(
 		(SELECT slot_number_end FROM select_result)
 		,(SELECT slot_prefix FROM select_result)
 		,(SELECT company_id FROM select_result)
@@ -101,7 +101,7 @@ func addSlotManualToDb(slotAddReq slot_model.SlotAddRequest, jwtemployeeid inter
 			db.GetDB().ScanRows(rows, &res)
 			// do something
 		}
-		if res.Func_addvisitorslot{
+		if res.Func_addvisitorslot_manual{
 			return false, ""
 		}
 		return true, "เพิ่มเลข Slot ล้มเหลว"

@@ -20,7 +20,7 @@ func (res SlotAddRequest) ConvertStructToJson() string {
 }
 
 type SlotAddResponse struct {
-	Func_addvisitorslot bool `json:"func_addvisitorslot"`
+	Func_addvisitorslot_manual bool `json:"func_addvisitorslot_manual"`
 }
 
 func (res SlotAddResponse) ConvertStructToJson() string {
