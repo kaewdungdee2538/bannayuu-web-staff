@@ -30,6 +30,7 @@ func insertVillagerQuery(
 			,home_line_last_name
 			,home_line_mobile_phone
 			,home_line_remark
+			,home_line_type
 			,create_by
 			,create_date
 			,company_id
@@ -40,6 +41,7 @@ func insertVillagerQuery(
 			,@home_line_last_name
 			,@home_line_mobile_phone
 			,@remark
+			,'NOTIFICATION'
 			,@create_by
 			,current_timestamp
 			,@company_id

@@ -24,14 +24,15 @@ type VillagerGetRequestModel struct {
 }
 
 type VillagerGetAllResponseModel struct {
-	Villager_id   string `json:"villager_id"`
-	Villager_code string `json:"villager_code"`
-	Home_address  string `json:"home_address"`
-	First_name    string `json:"first_name"`
-	Last_name     string `json:"last_name"`
-	Tel_number    string `json:"tel_number"`
-	Remark        string `json:"remark"`
-	Status        string `json:"status"`
-	Create_by     string `json:"create_by"`
-	Create_data   string `json:"create_date"`
+	Villager_id    string `json:"villager_id"`
+	Villager_code  string `json:"villager_code"`
+	Home_address   string `json:"home_address"`
+	First_name     string `json:"first_name"`
+	Last_name      string `json:"last_name"`
+	Tel_number     string `json:"tel_number"`
+	Remark         string `json:"remark"`
+	Home_line_type string `json:"home_line_type"`
+	Status         string `json:"status"`
+	Create_by      string `json:"create_by"`
+	Create_data    string `json:"create_date"`
 }

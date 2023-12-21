@@ -24,6 +24,7 @@ func GetVillagerAll(c *gin.Context) {
 	mh.home_address,home_line_first_name as first_name,home_line_last_name as last_name,
 	home_line_mobile_phone as tel_number,home_line_remark as remark,
 	case when mhl.delete_flag = 'Y' then 'DISABLE' else 'NORMAL' end as status,
+	home_line_type,
 	concat(me.first_name_th,' ',me.last_name_th) as create_by,
 	to_char(mhl.create_date,'YYYY-MM-DD HH24:MI:SS') as create_date
 	from m_home_line mhl

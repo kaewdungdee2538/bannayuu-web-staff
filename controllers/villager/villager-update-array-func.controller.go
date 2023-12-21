@@ -31,6 +31,7 @@ func updateVillagerQuery(
 			,home_line_last_name = @home_line_last_name
 			,home_line_mobile_phone = @home_line_mobile_phone
 			,home_line_remark = @remark
+			,home_line_type = 'NOTIFICATION'
 			,update_by = @update_by
 			,update_date = current_timestamp
 			where company_id = @company_id
