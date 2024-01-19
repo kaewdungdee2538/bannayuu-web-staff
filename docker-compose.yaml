@@ -20,6 +20,6 @@ services:
       - APP_PORT=36010
       - AUTHEN_TOKEN=f56c3775-07b0-45e7-800f-304274533cb7
       - ROOT_IMAGE=/home/ubuntu/banayuu_images/
-      - WEB_MANAGEMENT_RESET_USER=https://web_staff_demo.bannayuu.com/#/reset
+      - WEB_MANAGEMENT_RESET_USER=https://web_management_demo.bannayuu.com/#/reset
       - DB_MAX_IDLE_TIME=10
       - DB_MAX_CONECTIOS=10
