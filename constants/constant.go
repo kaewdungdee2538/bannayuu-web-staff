@@ -3,6 +3,7 @@ package constants
 import (
 	"fmt"
 	"os"
+	"time"
 )
 
 // -----------------Database
@@ -12,8 +13,8 @@ var DbPort = "5432"
 var AppPort = ":4501"
 
 // ----------------demo
-const DbUserName = "postgres"
-const DbPassword = "P@ssw0rd"
+var DbUserName = "postgres"
+var DbPassword = "P@ssw0rd"
 // ----------------uat and production
 // const DbUserName = "cit"
 // const DbPassword = "db13apr"
@@ -50,6 +51,9 @@ func InitializeEnv() bool {
 	DbHost = os.Getenv("DB_HOST")
 	DbName = os.Getenv("DB_NAME")
 	DbPort = os.Getenv("DB_PORT")
+	DbUserName = os.Getenv("DB_USERNAME")
+	DbPassword = os.Getenv("DB_PASSWORD")
+	
 	AppPort = os.Getenv("APP_PORT")
 	RootImages = os.Getenv("ROOT_IMAGE")
 	jwtAccessToken = os.Getenv("AUTHEN_TOKEN")
@@ -61,6 +65,8 @@ func InitializeEnv() bool {
 	fmt.Printf("DbHost : %s\n", DbHost)
 	fmt.Printf("DbName : %s\n", DbName)
 	fmt.Printf("DbPort : %s\n", DbPort)
+	fmt.Printf("DbUserName : %s\n", DbUserName)
+	fmt.Printf("DbPassword : %s\n", os.Getenv("DB_PASSWORD"))
 	fmt.Printf("AppPort : %s\n", AppPort)
 	fmt.Printf("RootImages : %s\n", RootImages)
 	fmt.Printf("jwtAccessToken : %s\n", jwtAccessToken)
@@ -68,7 +74,16 @@ func InitializeEnv() bool {
 
 	fmt.Printf("DbMaxIdleTime : %s\n", DbMaxIdleTime)
 	fmt.Printf("DbMaxConnections : %s\n", DbMaxConnections)
-	if DbHost == "" || DbName == "" || DbPort == "" || AppPort == "" || RootImages == "" || jwtAccessToken == "" || WEB_MANAGEMENT_RESET_USER == "" {
+	
+	fmt.Printf("TimeZone : %s\n", os.Getenv("TZ"))
+	current_time := time.Now()    
+	currentTimeZone, offset := current_time.Zone()
+	fmt.Printf("Current Time : %s\n", current_time.Local())
+   	fmt.Println("The Current time zone is:", currentTimeZone)
+   	fmt.Println("Time zone offset:", offset) 
+
+	if DbHost == "" || DbName == "" || DbPort == "" || DbUserName == "" || DbPassword == "" ||
+	   AppPort == "" || RootImages == "" || jwtAccessToken == "" || WEB_MANAGEMENT_RESET_USER == "" {
 		return false
 	}
 	

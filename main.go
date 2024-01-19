@@ -25,7 +25,7 @@ func main() {
 		logger.CreateOrAppendLogger(router)
 		//---initial router api
 		api.Setup(router)
-		router.Run(constants.AppPort)
+		router.Run(":"+constants.AppPort)
 	}else{
 		utils.WriteLog(utils.GetErrorLogFile(), fmt.Sprintln("Get Environment Fail !!"))
 		fmt.Println("Get Environment Fail !!")
